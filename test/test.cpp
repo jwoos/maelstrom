@@ -4,6 +4,9 @@
 
 struct TestStruct {};
 
+template <typename T>
+struct debug : public T::SOME_NONEXITENT_TYPE {};
+
 TEST_CASE("Sequences are constructed", "[sequence]") {
   STATIC_REQUIRE(maelstrom::sequence::sequence<void, int, TestStruct>::size ==
                  3);
@@ -26,5 +29,12 @@ TEST_CASE("Sequence operations", "[sequence]") {
     STATIC_REQUIRE(
         std::is_same_v<maelstrom::sequence::tail_t<TestType>,
                        maelstrom::sequence::sequence<int, TestStruct>>);
+  }
+
+  SECTION("last") {
+    // STATIC_REQUIRE(std::is_same_v<maelstrom::sequence::last<TestType>::type,
+    //                               TestStruct>);
+    // STATIC_REQUIRE(std::is_same_v<maelstrom::sequence::last_t<TestType>,
+    //                               TestStruct>);
   }
 }

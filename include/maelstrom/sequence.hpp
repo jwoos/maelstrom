@@ -33,37 +33,37 @@ template <typename T> struct head;
 template <typename... Vals>
 struct head<sequence<Vals...>> : public detail::head_impl<Vals...> {};
 
-template <typename... Vals>
-using head_t = head<Vals...>::type;
+template <typename... Vals> using head_t = head<Vals...>::type;
 
 template <typename T> struct tail;
 
 template <typename... Vals>
 struct tail<sequence<Vals...>> : public detail::tail_impl<Vals...> {};
 
-template <typename... Vals>
-using tail_t = tail<Vals...>::type;
+template <typename... Vals> using tail_t = tail<Vals...>::type;
 
 namespace detail {
-template <typename First, typename Second> struct last_impl {
-  using type = Second;
-};
 
-template <typename First> struct last_impl<First, Null> {
-  using type = First;
-};
-
-template <typename First, typename... Rest>
-struct last_impl<First, sequence<Rest...>> {
-  using type = last_impl<Rest...>;
+template <typename First, typename... Rest> struct last_impl {
+  using type = std::conditional_t<
+      sizeof...(Rest) == 0, First,
+		std::conditional_t<sizeof...(Rest) == 1, typename head_impl<Rest..., Null>::type, typename last_impl<Rest...>::type>
+      >;
 };
 
 } // namespace detail
 
 template <typename T> struct last;
 
+// template <typename... Vals>
+// struct last<sequence<Vals...>> : public detail::last_impl<Vals...> {};
 template <typename... Vals>
-struct last<sequence<Vals...>> : public detail::last_impl<Vals...> {};
+struct last<sequence<Vals...>> {
+	using type = detail::last_impl<Vals...>::type;
+};
+
+template<typename... Vals>
+using last_t = last<Vals...>::type;
 
 template <typename T> struct tuple_to_sequence;
 
