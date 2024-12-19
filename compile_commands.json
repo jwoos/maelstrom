@@ -6,6 +6,6 @@
 },
 {
   "directory": "/Users/jwoos/main/personal/maelstrom",
-  "arguments": ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang", "-c", "-Qunused-arguments", "-target", "arm64-apple-macos15.1", "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-Wall", "-Werror", "-O3", "-std=c++20", "-Iinclude", "-DNDEBUG", "-o", "build/.objs/test/macosx/arm64/release/tests/test.cpp.o", "tests/test.cpp"],
-  "file": "tests/test.cpp"
+  "arguments": ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang", "-c", "-Qunused-arguments", "-target", "arm64-apple-macos15.1", "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk", "-fvisibility=hidden", "-fvisibility-inlines-hidden", "-Wall", "-Werror", "-O3", "-std=c++20", "-Iinclude", "-I", "/Users/jwoos/.xmake/packages/c/catch2/v3.7.1/cfd1f822003a4c58863f81e86c5e39d0/include", "-DNDEBUG", "-o", "build/.objs/test/macosx/arm64/release/test/test.cpp.o", "test/test.cpp"],
+  "file": "test/test.cpp"
 }]

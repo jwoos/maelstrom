@@ -4,6 +4,8 @@ set_warnings("all", "error")
 
 set_languages("c++20")
 
+add_requires("catch2")
+
 target("maelstrom-lib")
 	set_kind("headeronly")
 	add_headerfiles("include/**/*.hpp")
@@ -15,8 +17,9 @@ target("main")
 
 target("test")
 	set_kind("binary")
-	add_files("tests/*.cpp")
+	add_files("test/*.cpp")
 	add_deps("maelstrom-lib")
+	add_packages("catch2")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
