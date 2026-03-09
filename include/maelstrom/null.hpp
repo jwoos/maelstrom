@@ -1,0 +1,5 @@
+namespace maelstrom {
+
+struct null {};
+
+}
