@@ -28,7 +28,7 @@ jobs:
         actions-cache-folder: '.xmake-cache'
 
     - name: Build
-      run: xmake build
+      run: xmake build --yes
 
     - name: Test
       run: xmake test
