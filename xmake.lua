@@ -4,6 +4,8 @@ set_warnings("all", "error")
 
 set_languages("c++20")
 
+set_defaultmode("debug")
+
 add_requires("catch2")
 
 target("maelstrom-lib")
