@@ -28,6 +28,11 @@ template <typename First, typename... Rest> struct tail_impl {
 
 } // namespace detail
 
+/**
+ * maelstrom::sequence::head
+ *
+ * Get the first element of a sequence
+ */
 template <typename T> struct head;
 
 template <typename... Vals>
@@ -35,6 +40,11 @@ struct head<sequence<Vals...>> : public detail::head_impl<Vals...> {};
 
 template <typename... Vals> using head_t = head<Vals...>::type;
 
+/**
+ * maelstrom::sequence::tail
+ *
+ * Get the sequence minus the head (first element)
+ */
 template <typename T> struct tail;
 
 template <typename... Vals>
@@ -47,30 +57,46 @@ namespace detail {
 template <typename First, typename... Rest> struct last_impl {
   using type = std::conditional_t<
       sizeof...(Rest) == 0, First,
-		std::conditional_t<sizeof...(Rest) == 1, typename head_impl<Rest..., Null>::type, typename last_impl<Rest...>::type>
-      >;
+      std::conditional_t<sizeof...(Rest) == 1,
+                         typename head_impl<Rest..., Null>::type,
+                         typename last_impl<Rest...>::type>>;
 };
 
 } // namespace detail
 
+
+/**
+ * maelstrom::sequence::last
+ *
+ * Get the last element of a sequence
+ */
 template <typename T> struct last;
 
 // template <typename... Vals>
 // struct last<sequence<Vals...>> : public detail::last_impl<Vals...> {};
-template <typename... Vals>
-struct last<sequence<Vals...>> {
-	using type = detail::last_impl<Vals...>::type;
+template <typename... Vals> struct last<sequence<Vals...>> {
+  using type = detail::last_impl<Vals...>::type;
 };
 
-template<typename... Vals>
-using last_t = last<Vals...>::type;
+template <typename... Vals> using last_t = last<Vals...>::type;
 
+/**
+ * maelstrom::sequence::tuple_to_sequence
+ *
+ * Transforms a tuple to a sequence
+ */
 template <typename T> struct tuple_to_sequence;
 
 template <typename... Inner> struct tuple_to_sequence<std::tuple<Inner...>> {
   using type = sequence<Inner...>;
 };
 
+
+/**
+ * maelstrom::sequence::concat
+ *
+ * Concatenates multiple sequences together
+ */
 template <typename T, typename U> struct concat;
 
 template <typename T, typename... Rest>

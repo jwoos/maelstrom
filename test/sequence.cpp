@@ -4,8 +4,7 @@
 
 struct TestStruct {};
 
-template <typename T>
-struct debug : public T::SOME_NONEXITENT_TYPE {};
+template <typename T> struct debug : public T::SOME_NONEXITENT_TYPE {};
 
 TEST_CASE("Sequences are constructed", "[sequence]") {
   STATIC_REQUIRE(maelstrom::sequence::sequence<void, int, TestStruct>::size ==
