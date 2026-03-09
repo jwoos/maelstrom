@@ -1,0 +1,46 @@
+name: main
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+        actions-cache-folder: '.xmake-cache'
+
+    - name: Restore cached Primes
+      id: cache-restore
+      uses: actions/cache/restore@v5
+      with:
+        path: |
+          ~/.xmake/packages
+        key: ${{ runner.os }}-${{ hashFiles('xmake-requires.lock') }}-cache
+
+    - name: Get packages
+      if: steps.cache-restore.outputs.cache-hit != 'true'
+      run: xmake require --yes
+
+    - name: Save Primes
+      id: cache-save
+      if: steps.cache-restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: |
+          ~/.xmake/packages
+        key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+
+    - name: Build
+      run: xmake build --yes
+
+    - name: Test
+      run: xmake test
