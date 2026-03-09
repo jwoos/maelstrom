@@ -31,9 +31,16 @@ TEST_CASE("Sequence operations", "[sequence]") {
   }
 
   SECTION("last") {
-    // STATIC_REQUIRE(std::is_same_v<maelstrom::sequence::last<TestType>::type,
-    //                               TestStruct>);
-    // STATIC_REQUIRE(std::is_same_v<maelstrom::sequence::last_t<TestType>,
-    //                               TestStruct>);
+    STATIC_REQUIRE(
+        std::is_same_v<maelstrom::sequence::last<TestType>::type, TestStruct>);
+    STATIC_REQUIRE(
+        std::is_same_v<maelstrom::sequence::last_t<TestType>, TestStruct>);
+  }
+
+  SECTION("init") {
+    STATIC_REQUIRE(std::is_same_v<maelstrom::sequence::init<TestType>::type,
+                                  maelstrom::sequence::sequence<void, int>>);
+    STATIC_REQUIRE(std::is_same_v<maelstrom::sequence::init_t<TestType>,
+                                  maelstrom::sequence::sequence<void, int>>);
   }
 }

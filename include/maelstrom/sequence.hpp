@@ -57,9 +57,11 @@ namespace detail {
 template <typename First, typename... Rest> struct last_impl {
   using type = std::conditional_t<
       sizeof...(Rest) == 0, First,
-      std::conditional_t<sizeof...(Rest) == 1,
-                         typename head_impl<Rest..., Null>::type,
-                         typename last_impl<Rest...>::type>>;
+      typename last_impl<Rest...>::type>;
+};
+
+template <typename T> struct last_impl<T> {
+  using type = T;
 };
 
 } // namespace detail
@@ -79,6 +81,35 @@ template <typename... Vals> struct last<sequence<Vals...>> {
 };
 
 template <typename... Vals> using last_t = last<Vals...>::type;
+
+namespace detail {
+
+template <typename T, typename... Acc> struct init_impl;
+
+template <typename Last, typename... Acc>
+struct init_impl<sequence<Last>, sequence<Acc...>> {
+  using type = sequence<Acc...>;
+};
+
+template <typename First, typename... Rest, typename... Acc>
+struct init_impl<sequence<First, Rest...>, sequence<Acc...>> {
+  using type = typename init_impl<sequence<Rest...>, sequence<Acc..., First>>::type;
+};
+
+}
+
+/**
+ * maelstrom::sequence::init
+ *
+ * Get all elements except the last
+ */
+template <typename T> struct init;
+
+template <typename... Vals> struct init<sequence<Vals...>> {
+  using type = detail::init_impl<sequence<Vals...>, sequence<>>::type;
+};
+
+template <typename... Vals> using init_t = init<Vals...>::type;
 
 /**
  * maelstrom::sequence::tuple_to_sequence
