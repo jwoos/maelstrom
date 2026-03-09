@@ -8,6 +8,8 @@ set_defaultmode("debug")
 
 add_requires("catch2")
 
+set_policy("package.requires_lock", true)
+
 target("maelstrom-lib")
 	set_kind("headeronly")
 	add_headerfiles("include/**/*.hpp")
